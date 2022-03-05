@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Flamingo](https://up.htmlacademy.ru/javascript/25/user/852159).
-* Наставник: `Неизвестно`.
+* Наставник: `Ксения Гарпушкина`(https://htmlacademy.ru/profile/id1883933).
 
 ---
 
