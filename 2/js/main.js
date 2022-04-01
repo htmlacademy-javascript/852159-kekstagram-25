@@ -2,14 +2,8 @@
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
-  if(min < 0) {
+  if(min < 0 || max < 0) {
     return null;
-  }
-  if(max < 0) {
-    return null;
-  }
-  if (max === min) {
-    return max;
   }
   if (max < min ) {
     return null;
@@ -21,4 +15,5 @@ getRandomInt (1, 10);
 
 // Функция для проверки максимальной длины строки. Будет использоваться для проверки длины введённого комментария, но должна быть универсальна
 const checkStringLength = (stringChecked, maxLength) => stringChecked.length <= maxLength;
+
 checkStringLength('Проверка', 24);
