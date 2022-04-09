@@ -72,35 +72,37 @@ function generateCommentMessage() {
   return result;
 }
 
-function genereateComment(id) {
+function createIdGenerator() {
+  let lastGeneratedId = 0;
+
+  return function () {
+    lastGeneratedId += 1;
+    return lastGeneratedId;
+  };
+}
+
+const generateCommentId = createIdGenerator();
+
+function genereateComment() {
   const author = getRandomArrayElement(AUTHORS);
   return {
-    id: id,
+    id: generateCommentId(),
     avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
     message: generateCommentMessage(),
     name: author,
   };
 }
 
-function generateComments() {
-  const size = getRandomPositiveInteger(0, 5);
-  const result = [];
-  for(let i =0; i<size; ++i) {
-    result.push(genereateComment(i));
-  }
-  return result;
-}
-
 //Функция формирования объекта описания фото и комментария из массива
-const createPhotoDescription = (_, id) => ({
-
-  id: id+1,
-  url: `photos/${String(id)}.jpg`,
-  description: `Моя любимая фотография номер ${id} из 25`,
-  likes: getRandomPositiveInteger(15, 200), //количество лайков, поставленных фотографии. Случайное число от 15 до 200.
-  comments: generateComments()
+const createPhotoDescription = (element, index) => ({
+  id: index+1,
+  url: `photos/${index}.jpg`,
+  description: `Моя любимая фотография номер ${index} из 25`,
+  likes: getRandomPositiveInteger(15, 200), //Количество лайков, поставленных фотографии. Случайное число от 15 до 200.
+  //Генерирует массив комментариев
+  comments: Array.from({length: getRandomPositiveInteger(0, 5)}, genereateComment)
 });
 
-const GeneratePhotosArray = () =>  Array.from({length: 25,}, createPhotoDescription);
+const generatePhotosArray = () =>  Array.from({length: 25}, createPhotoDescription);
 
-GeneratePhotosArray();
+generatePhotosArray();
