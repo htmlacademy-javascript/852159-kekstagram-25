@@ -7,8 +7,8 @@ const POST_PHOTOS_COUNT = 25;
 const LIKES_MIN_NUMBER = 15;
 const LIKES_MAX_NUMBER = 200;
 
-const COMMENTS_MIN_NUMBER = 0;
-const COMMENTS_MAX_NUMBER = 5;
+const COMMENTS_MIN_NUMBER = 1;
+const COMMENTS_MAX_NUMBER = 15;
 
 const generatePhotoId = createRandomIdFromRangeGenerator(1, POST_PHOTOS_COUNT);
 const generatePhotoUrl = createRandomIdFromRangeGenerator(1, POST_PHOTOS_COUNT);
