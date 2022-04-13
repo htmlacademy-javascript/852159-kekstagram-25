@@ -17,7 +17,7 @@ const generatePhotoUrl = createRandomIdFromRangeGenerator(1, POST_PHOTOS_COUNT);
 const createPost = () => {
   const id = generatePhotoId();
   return {
-    id: id,
+    id: id.toString(),
     url: `photos/${generatePhotoUrl()}.jpg`,
     description: `Моя любимая фотография номер ${id} из 25`,
     likes: getRandomPositiveInteger(LIKES_MIN_NUMBER, LIKES_MAX_NUMBER), //Количество лайков, поставленных фотографии. Случайное число от 15 до 200.

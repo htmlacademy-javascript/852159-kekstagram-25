@@ -17,7 +17,7 @@ function generateCommentMessage() {
 function generateComment() {
   const author = getRandomArrayElement(AUTHORS);
   return {
-    id: generateCommentId(),
+    id: generateCommentId().toString(),
     avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
     message: generateCommentMessage(),
     name: author,

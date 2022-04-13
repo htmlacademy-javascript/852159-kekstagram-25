@@ -1,6 +1,8 @@
+import {isEscapeKey} from './util.js';
+
 // Обработчик нажатия клавиши Esc
 const onKeyDown = (event) => {
-  if (event.key === 'Escape') {
+  if (isEscapeKey()) {
     event.preventDefault();
     closeFullSize();
   }
@@ -36,11 +38,11 @@ function renderComments(commentsObject) {
 }
 
 // Функция для включения полноразмерного режима для поста с заданным src
-function fullSizePicture(src, posts) {
+function fullSizePicture(id, posts) {
   const bigPicture = document.querySelector('.big-picture');
 
   // получаем первый же пост с заданным src
-  const post = posts.filter((element) => element.url === src)[0];
+  const post = posts.find((element) => element.id === id);
   // заполняем элементы поста в элемент DOM bigPicture
   bigPicture.querySelector('img').src = post.url;
   bigPicture.querySelector('.likes-count').textContent = post.likes;
