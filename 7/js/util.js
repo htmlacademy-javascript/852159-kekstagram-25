@@ -38,4 +38,8 @@ function createIdGenerator() {
   };
 }
 
-export {getRandomPositiveInteger, checkStringLength, createRandomIdFromRangeGenerator, getRandomArrayElement, createIdGenerator};
+const isEscapeKey = (event) => event.key === 'Escape';
+
+export {getRandomPositiveInteger, checkStringLength,
+  createRandomIdFromRangeGenerator, getRandomArrayElement, createIdGenerator,
+  isEscapeKey};
