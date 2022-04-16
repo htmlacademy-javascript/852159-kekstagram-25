@@ -17,7 +17,7 @@ const renderMiniPictures = (postsArray) => {
     photo.querySelector('.picture__comments').textContent =
       post.comments.length;
     photo.querySelector('.picture__likes').textContent = post.likes;
-
+    photo.id = post.id;
     picturesFragment.appendChild(photo);
   });
   // Добавляем результат в DOM

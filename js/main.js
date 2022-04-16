@@ -1,4 +1,4 @@
-import {generatePostsArray} from './generate-posts.js';
-import {renderMiniPictures} from './render-miniatures.js';
-
-renderMiniPictures(generatePostsArray());
+import './gallery.js';
+import './form.js';
+import './scale.js';
+import './slider.js';
