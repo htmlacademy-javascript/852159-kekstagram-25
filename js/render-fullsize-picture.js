@@ -24,13 +24,22 @@ function renderComments(commentsObject) {
   commentsBlock.textContent = ' ';
   for (const commentObject of commentsObject) {
     const comment = document.createElement('li');
+    const img = document.createElement('img');
+    const socialText = document.createElement('p');
+
     comment.classList.add('social__comment');
-    comment.innerHTML = `<img
-        class="social__picture"
-        src="${commentObject.avatar}"
-        alt="${commentObject.userName}"
-        width="35" height="35">
-        <p class="social__text">${commentObject.message}</p>`;
+    img.classList.add('social__picture');
+    img.src = commentObject.avatar;
+    img.alt = commentObject.name;
+    img.width = 35;
+    img.height = 35;
+
+    socialText.classList.add('social__text');
+    socialText.textContent = `${commentObject.message}`;
+
+    comment.appendChild(img);
+    comment.appendChild(socialText);
+
     commentsBlock.appendChild(comment);
   }
 }
