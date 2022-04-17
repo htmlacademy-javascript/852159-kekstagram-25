@@ -46,26 +46,29 @@ function alertFailureMesage(message) {
   document.createElement('div');
 
   const alertNode = document.createElement('div');
-  alertNode.style.opacity = 1;
-  alertNode.style.position = 'fixed';
-  alertNode.style.height = '100%';
-  alertNode.style.width = '100%';
-  alertNode.style.backgroundColor = 'rgba(94, 110, 141, 0.9)';
-  alertNode.style.left = 0;
-  alertNode.style.top = 0;
-  alertNode.style.zIndex = 100;
+  alertNode.style = {
+    opacity: 1,
+    position: 'fixed',
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(94, 110, 141, 0.9)',
+    left: 0,
+    top: 0,
+    zIndex: 100
+  };
 
   const container = document.createElement('div');
-
-  container.style.position = 'relative';
-  container.style.width = '90%';
-  container.style.maxWidth = '400px';
-  container.style.margin = '4em auto';
-  container.style.background = '#FFF';
-  container.style.color = '#000';
-  container.style.borderRadius = '.25em .25em .4em .4em';
-  container.style.textAlign = 'center';
-  container.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.2)';
+  container.style = {
+    position: 'relative',
+    width: '90%',
+    maxWidth: '400px',
+    margin: '4em auto',
+    background: '#FFF',
+    color: '#000',
+    borderRadius: '.25em .25em .4em .4em',
+    textAlign: 'center',
+    boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)'
+  };
 
   const messageContainer = document.createElement('p');
   messageContainer.style.padding = '3em 1em';
@@ -80,21 +83,21 @@ function alertFailureMesage(message) {
 
   close.href = '#0';
 
-  close.style.display = 'inline-block';
-  close.style.textIndent = '100%';
-  close.style.position = 'absolute';
-  close.style.color = '#000';
-  close.style.whiteSpace = 'nowrap';
-
-  close.style.top = '8px';
-  close.style.right = '8px';
-  close.style.width = '30px';
-  close.style.height = '30px';
+  close.style = {
+    display: 'inline-block',
+    textIndent: '100%',
+    position: 'absolute',
+    color: '#000',
+    whiteSpace: 'nowrap',
+    top: '8px',
+    right: '8px',
+    width: '30px',
+    height: '30px'
+  };
 
   container.appendChild(messageContainer);
   container.appendChild(close);
 
-  alertNode.appendChild(container);
   alertNode.appendChild(container);
   document.body.appendChild(alertNode);
 }
