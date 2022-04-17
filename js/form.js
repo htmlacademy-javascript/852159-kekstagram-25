@@ -70,8 +70,8 @@ pristine.addValidator(uploadTexthashtags, validateHashTags, ERROR_HASH_TAG);
 const resetForm = () => {
   uploadForm.reset();
   resetScale();
-  resetSlider(); 
-}
+  resetSlider();
+};
 
 const onFormSubmit = () => {
   closeFormModal();

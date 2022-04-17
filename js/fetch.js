@@ -1,5 +1,5 @@
 
-import {showGallery} from './gallery.js';
+import {onPhotosRecieved} from './filter.js';
 import {alertFailureMesage} from './util.js';
 
 const DATA_URL = 'https://25.javascript.pages.academy/kekstagram/data';
@@ -10,7 +10,7 @@ const FETCH_RETRY_TIMEOUT = 3000;
 
 function handleResponse (response) {
   if (!response.ok) {
-    throw new Error(`Загрузка не удалась. Подождите немного. ${response.status} ${response.statusText}`)
+    throw new Error(`Загрузка не удалась. Подождите немного. ${response.status} ${response.statusText}`);
   }
   return response;
 }
@@ -23,7 +23,7 @@ function fetchData() {
   fetch(DATA_URL)
     .then(handleResponse)
     .then(toJSON)
-    .then(showGallery)
+    .then(onPhotosRecieved)
     .catch((err) => {
       alertFailureMesage(err);
       setTimeout(fetchData, FETCH_RETRY_TIMEOUT);

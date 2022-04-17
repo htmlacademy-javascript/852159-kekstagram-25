@@ -1,6 +1,3 @@
-// Если выставить в true, сообщения об ошибке будут выводиться простым алертом
-const SIMPLE_ALERT = false;
-
 // Функция, возвращающая случайное целое число из переданного диапазона включительно
 function getRandomPositiveInteger (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -46,9 +43,6 @@ const isEscapeKey = (event) => event.key === 'Escape';
 // Функция для отображения сообщения об ошибке запроса загрузки данных с сервера. пункт 4.2 текущего тз
 // Идея дизайна взята https://us.niemvuilaptrinh.com/article/27-example-of-alert-javascript-for-website
 function alertFailureMesage(message) {
-  if (SIMPLE_ALERT) {
-    return alert(message);
-  }
   document.createElement('div');
 
   const alertNode = document.createElement('div');
@@ -56,46 +50,46 @@ function alertFailureMesage(message) {
   alertNode.style.position = 'fixed';
   alertNode.style.height = '100%';
   alertNode.style.width = '100%';
-  alertNode.style.backgroundColor = "rgba(94, 110, 141, 0.9)";
+  alertNode.style.backgroundColor = 'rgba(94, 110, 141, 0.9)';
   alertNode.style.left = 0;
   alertNode.style.top = 0;
   alertNode.style.zIndex = 100;
 
   const container = document.createElement('div');
 
-  container.style.position = "relative";
-  container.style.width = "90%";
-  container.style.maxWidth = "400px";
-  container.style.margin = "4em auto";
-  container.style.background = "#FFF";
-  container.style.color = "#000";
-  container.style.borderRadius = ".25em .25em .4em .4em";
-  container.style.textAlign = "center";
-  container.style.boxShadow = "0 0 20px rgba(0, 0, 0, 0.2)";
-  
+  container.style.position = 'relative';
+  container.style.width = '90%';
+  container.style.maxWidth = '400px';
+  container.style.margin = '4em auto';
+  container.style.background = '#FFF';
+  container.style.color = '#000';
+  container.style.borderRadius = '.25em .25em .4em .4em';
+  container.style.textAlign = 'center';
+  container.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.2)';
+
   const messageContainer = document.createElement('p');
-  messageContainer.style.padding = "3em 1em";
+  messageContainer.style.padding = '3em 1em';
   messageContainer.textContent = message;
 
   const close = document.createElement('a');
-  close.textContent = "X";
+  close.textContent = 'X';
   close.addEventListener('click', (event) => {
     alertNode.remove();
     event.preventDefault();
   });
 
-  close.href = "#0";
+  close.href = '#0';
 
-  close.style.display = "inline-block";
-  close.style.textIndent = "100%";
-  close.style.position = "absolute";
-  close.style.color = "#000";
-  close.style.whiteSpace = "nowrap";
+  close.style.display = 'inline-block';
+  close.style.textIndent = '100%';
+  close.style.position = 'absolute';
+  close.style.color = '#000';
+  close.style.whiteSpace = 'nowrap';
 
-  close.style.top = "8px";
-  close.style.right = "8px";
-  close.style.width = "30px";
-  close.style.height = "30px";
+  close.style.top = '8px';
+  close.style.right = '8px';
+  close.style.width = '30px';
+  close.style.height = '30px';
 
   container.appendChild(messageContainer);
   container.appendChild(close);
@@ -166,7 +160,7 @@ function debounce (callback, timeoutDelay = 500) {
 }
 
 function throttle (callback, delayBetweenFrames) {
-  // Используем замыкания, чтобы время "последнего кадра" навсегда приклеилось
+  // Используем замыкания, чтобы время 'последнего кадра' навсегда приклеилось
   // к возвращаемой функции с условием, тогда мы его сможем перезаписывать
   let lastTime = 0;
 
@@ -178,7 +172,7 @@ function throttle (callback, delayBetweenFrames) {
 
     // Если время между кадрами больше задержки,
     // вызываем наш колбэк и перезаписываем lastTime
-    // временем "последнего кадра"
+    // временем 'последнего кадра'
     if (now - lastTime >= delayBetweenFrames) {
       callback.apply(this, rest);
       lastTime = now;
@@ -186,6 +180,26 @@ function throttle (callback, delayBetweenFrames) {
   };
 }
 
+function shuffleArray(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex !== 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+
 export {getRandomPositiveInteger, checkStringLength,
   createRandomIdFromRangeGenerator, getRandomArrayElement, createIdGenerator,
-  isEscapeKey, alertFailureMesage, showSuccessMessage, showErrorMessage, debounce, throttle};
+  isEscapeKey, alertFailureMesage, showSuccessMessage, showErrorMessage,
+  debounce, throttle, shuffleArray};

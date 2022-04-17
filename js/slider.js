@@ -70,7 +70,7 @@ const changeEffect = (effect) => {
 const resetSlider = () => {
   // по умолчанию эффект none
   changeEffect(effects['none']);
-}
+};
 
 resetSlider();
 
