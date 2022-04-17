@@ -40,8 +40,17 @@ const higherScale = () => {
   rescaleImage();
 };
 
+// Вспомогательная функция для сброса значения скейлинга
+const resetScale = () => {
+  imageScalueValue = SCALE_VALUE_DEFALUT;
+  rescaleImage();
+};
+
 // Добавляем обработчики нажатия на кнопки
 scaleSmallerButton.addEventListener('click', lowerScale);
 scaleBiggerButton.addEventListener('click', higherScale);
+
 // Устанавливаем значение скейла по умолчанию
-rescaleImage();
+resetScale();
+
+export {resetScale};

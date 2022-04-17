@@ -1,4 +1,8 @@
 import { checkStringLength, isEscapeKey } from './util.js';
+import {sendData} from './fetch.js';
+import {showSuccessMessage, showErrorMessage, alertFailureMesage} from './util.js';
+import {resetScale} from './scale.js';
+import {resetSlider} from './slider.js';
 
 // Максимально возможная длина комментария
 const MAX_COMMENT_LENGTH = 140;
@@ -63,17 +67,31 @@ const validateHashTags = (textHashtags) => {
 pristine.addValidator(uploadTextDescription, validateComment, ERROR_BAD_COMMENT);
 pristine.addValidator(uploadTexthashtags, validateHashTags, ERROR_HASH_TAG);
 
+const resetForm = () => {
+  uploadForm.reset();
+  resetScale();
+  resetSlider(); 
+}
+
+const onFormSubmit = () => {
+  closeFormModal();
+  resetForm();
+  showSuccessMessage();
+};
+
+const onFormSubmitError = () => {
+  showErrorMessage();
+};
+
 uploadForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  pristine.validate();
-  // код на следующее задание.
-  // const isValid = pristine.validate();
-  // закрываем форму
-  // if (isValid) {
-  //   closeFormModal();
-  //   // осуществляем отправку данных формы
-  //   event.target.submit();
-  // }
+  const isValid = pristine.validate();
+  if (isValid) {
+    const data = new FormData(event.target);
+    sendData(onFormSubmit, onFormSubmitError, data);
+  } else {
+    alertFailureMesage('Форма содержит ошибки');
+  }
 });
 
 // Обработчик нажатия кнопки по форме
@@ -81,6 +99,7 @@ const onFormKeydown = (event) => {
   if (isEscapeKey(event)) {
     event.preventDefault();
     closeFormModal();
+    resetForm();
   }
 };
 
