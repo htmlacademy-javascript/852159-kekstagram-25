@@ -17,11 +17,21 @@ function compareCommentsCount(photo1, photo2) {
   return photo2.comments.length - photo1.comments.length;
 }
 
+const clearActive = () => {
+  defaultButton.classList.remove('img-filters__button--active');
+  randomButton.classList.remove('img-filters__button--active');
+  discussedButton.classList.remove('img-filters__button--active');
+}
+
 // функция обработчик события о получении фотографий с сервера
 const onPhotosRecieved = (photosArray) => {
   // Регистрируем обработчики событий по нажатию на кнопки
   // По умолчанию рисуем картинки в порядке 'как есть'
-  defaultButton.addEventListener('click', debounce(() => showGallery(photosArray), FILTER_DELAY));
+  defaultButton.addEventListener('click', debounce(() => {
+    showGallery(photosArray);
+    clearActive();
+    defaultButton.classList.add('img-filters__button--active');
+  }, FILTER_DELAY));
   // В случайном порядке перетасуем фотографии и ограничим число вывода
   randomButton.addEventListener('click', debounce(() => {
     showGallery(shuffleArray(photosArray.slice()).slice(0, RANDOM_PHOTOS_LIMIT));
