@@ -76,7 +76,7 @@ function renderComments() {
 // Функция для включения полноразмерного режима для поста с заданным src
 function fullSizePicture(id, posts) {
   // получаем первый же пост с заданным src
-  const post = posts.find((element) => element.id === id);
+  const post = posts.find((element) => element.id.toString() === id);
   resetComments(post.comments);
   // заполняем элементы поста в элемент DOM bigPicture
   bigPicture.querySelector('img').src = post.url;

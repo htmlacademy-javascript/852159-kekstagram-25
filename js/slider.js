@@ -54,24 +54,30 @@ const changeEffect = (effect) => {
   sliderElement.noUiSlider.updateOptions(effect);
   if (effect.filter === 'none') {
     // Если эффекты не нужны, прячем слайдер
-    image.style.filter = '';
+    image.style.filter = 'none';
     sliderBlock.classList.add('hidden');
   } else {
     sliderBlock.classList.remove('hidden');
+    sliderElement.noUiSlider.on('update', () => {
+      // получаем текущее значение слайдера
+      valueElement.value = sliderElement.noUiSlider.get();
+      // выставляем фильтр эффекта
+      image.style.filter = `${effect.filter}(${valueElement.value}${effect.scale})`;
+    });
   }
-  sliderElement.noUiSlider.on('update', () => {
-    // получаем текущее значение слайдера
-    valueElement.value = sliderElement.noUiSlider.get();
-    // выставляем фильтр эффекта
-    image.style.filter = `${effect.filter}(${valueElement.value}${effect.scale})`;
-  });
 };
 
-// по умолчанию эффект none
-changeEffect(effects['none']);
+const resetSlider = () => {
+  // по умолчанию эффект none
+  changeEffect(effects['none']);
+};
+
+resetSlider();
 
 effectsList.addEventListener('click', (event) => {
   if (event.target.matches('.effects__radio')) {
     changeEffect(effects[event.target.value]);
   }
 });
+
+export {resetSlider};

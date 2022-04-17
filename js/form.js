@@ -1,11 +1,18 @@
 import { checkStringLength, isEscapeKey } from './util.js';
+import {sendData} from './fetch.js';
+import {showSuccessMessage, showErrorMessage, alertFailureMesage} from './util.js';
+import {resetScale} from './scale.js';
+import {resetSlider} from './slider.js';
 
 // Максимально возможная длина комментария
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAGS_COUNT = 5;
+const ALLOWED_FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
+const ERROR_FORM_DATA = 'Форма содержит ошибки';
 const ERROR_BAD_COMMENT = 'Слишком длинный комментарий';
 const ERROR_HASH_TAG = 'Хэш тэги не валидны';
+const ERROR_WRONG_FILE = `Выбран неподдерживаемый тип файла. Пожалуйста выберите один из : ${ALLOWED_FILE_TYPES.join(', ')}`;
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadFile = uploadForm.querySelector('#upload-file');
@@ -63,17 +70,31 @@ const validateHashTags = (textHashtags) => {
 pristine.addValidator(uploadTextDescription, validateComment, ERROR_BAD_COMMENT);
 pristine.addValidator(uploadTexthashtags, validateHashTags, ERROR_HASH_TAG);
 
+const resetForm = () => {
+  uploadForm.reset();
+  resetScale();
+  resetSlider();
+};
+
+const onFormSubmit = () => {
+  closeFormModal();
+  resetForm();
+  showSuccessMessage();
+};
+
+const onFormSubmitError = () => {
+  showErrorMessage();
+};
+
 uploadForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  pristine.validate();
-  // код на следующее задание.
-  // const isValid = pristine.validate();
-  // закрываем форму
-  // if (isValid) {
-  //   closeFormModal();
-  //   // осуществляем отправку данных формы
-  //   event.target.submit();
-  // }
+  const isValid = pristine.validate();
+  if (isValid) {
+    const data = new FormData(event.target);
+    sendData(onFormSubmit, onFormSubmitError, data);
+  } else {
+    alertFailureMesage(ERROR_FORM_DATA);
+  }
 });
 
 // Обработчик нажатия кнопки по форме
@@ -81,6 +102,7 @@ const onFormKeydown = (event) => {
   if (isEscapeKey(event)) {
     event.preventDefault();
     closeFormModal();
+    resetForm();
   }
 };
 
@@ -91,12 +113,24 @@ function closeFormModal() {
   document.removeEventListener('keydown', onFormKeydown);
 }
 
+function validateImage() {
+  const image = uploadFile.files[0];
+  const match = ALLOWED_FILE_TYPES.some((type) => image.name.toLowerCase().endsWith(`.${  type}`));
+  return match;
+}
+
 // Отображаем форму после выбора картинки пользователем
 uploadFile.addEventListener('change', () => {
-  document.body.classList.add('modal-open');
-  uploadOverlayForm.classList.remove('hidden');
-  imgUploadPreview.src = URL.createObjectURL(uploadFile.files[0]);
-  document.addEventListener('keydown', onFormKeydown);
+  if (validateImage()) {
+    document.body.classList.add('modal-open');
+    uploadOverlayForm.classList.remove('hidden');
+    imgUploadPreview.src = URL.createObjectURL(uploadFile.files[0]);
+    document.addEventListener('keydown', onFormKeydown);
+    // ставим дефолтное значния маштаба картинки после отображения
+    resetScale();
+  } else {
+    alertFailureMesage(ERROR_WRONG_FILE);
+  }
 });
 
 // Прячем форму по нажатию на крестик
