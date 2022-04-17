@@ -50,7 +50,4 @@ const resetScale = () => {
 scaleSmallerButton.addEventListener('click', lowerScale);
 scaleBiggerButton.addEventListener('click', higherScale);
 
-// Устанавливаем значение скейла по умолчанию
-resetScale();
-
 export {resetScale};

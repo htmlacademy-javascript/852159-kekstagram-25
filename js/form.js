@@ -115,7 +115,7 @@ function closeFormModal() {
 
 function validateImage() {
   const image = uploadFile.files[0];
-  const match = ALLOWED_FILE_TYPES.some((type) => image.name.toLowerCase().endsWith('.' + type));
+  const match = ALLOWED_FILE_TYPES.some((type) => image.name.toLowerCase().endsWith(`.${  type}`));
   return match;
 }
 
@@ -125,7 +125,9 @@ uploadFile.addEventListener('change', () => {
     document.body.classList.add('modal-open');
     uploadOverlayForm.classList.remove('hidden');
     imgUploadPreview.src = URL.createObjectURL(uploadFile.files[0]);
-    document.addEventListener('keydown', onFormKeydown);    
+    document.addEventListener('keydown', onFormKeydown);
+    // ставим дефолтное значния маштаба картинки после отображения
+    resetScale();
   } else {
     alertFailureMesage(ERROR_WRONG_FILE);
   }

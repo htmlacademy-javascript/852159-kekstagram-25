@@ -17,11 +17,14 @@ function compareCommentsCount(photo1, photo2) {
   return photo2.comments.length - photo1.comments.length;
 }
 
-const clearActive = () => {
-  defaultButton.classList.remove('img-filters__button--active');
-  randomButton.classList.remove('img-filters__button--active');
-  discussedButton.classList.remove('img-filters__button--active');
-}
+//Вспомогательная функция для очистки активной кнопки и выбора новой
+const setActive = (activeButton) => {
+  const className = 'img-filters__button--active';
+  defaultButton.classList.remove(className);
+  randomButton.classList.remove(className);
+  discussedButton.classList.remove(className);
+  activeButton.classList.add(className);
+};
 
 // функция обработчик события о получении фотографий с сервера
 const onPhotosRecieved = (photosArray) => {
@@ -29,15 +32,19 @@ const onPhotosRecieved = (photosArray) => {
   // По умолчанию рисуем картинки в порядке 'как есть'
   defaultButton.addEventListener('click', debounce(() => {
     showGallery(photosArray);
-    clearActive();
+    setActive(defaultButton);
     defaultButton.classList.add('img-filters__button--active');
   }, FILTER_DELAY));
   // В случайном порядке перетасуем фотографии и ограничим число вывода
   randomButton.addEventListener('click', debounce(() => {
     showGallery(shuffleArray(photosArray.slice()).slice(0, RANDOM_PHOTOS_LIMIT));
+    setActive(randomButton);
   }, FILTER_DELAY));
   // Сортируем фотографии по числу комментариев.
-  discussedButton.addEventListener('click', debounce(() => showGallery(photosArray.slice().sort(compareCommentsCount)), FILTER_DELAY));
+  discussedButton.addEventListener('click', debounce(() => {
+    showGallery(photosArray.slice().sort(compareCommentsCount));
+    setActive(discussedButton);
+  }, FILTER_DELAY));
   // отображаем картинки как есть.
   showGallery(photosArray);
 };
