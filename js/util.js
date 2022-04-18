@@ -1,13 +1,13 @@
 // Функция, возвращающая случайное целое число из переданного диапазона включительно
-function getRandomPositiveInteger (min, max) {
+const getRandomPositiveInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-}
+};
 
 // Функция возвращающая генератор уникальных случайных целых чисел в диаапозоне min, max.
-function createRandomIdFromRangeGenerator (min, max) {
+const createRandomIdFromRangeGenerator = (min, max) => {
   const previousValues = [];
 
   return function () {
@@ -21,7 +21,7 @@ function createRandomIdFromRangeGenerator (min, max) {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 
 // Функция для проверки максимальной длины строки. Будет использоваться для проверки длины введённого комментария, но должна быть универсальна
 const checkStringLength = (stringChecked, maxLength) => stringChecked.length <= maxLength;
@@ -30,19 +30,19 @@ const checkStringLength = (stringChecked, maxLength) => stringChecked.length <= 
 const getRandomArrayElement = (array) => array[getRandomPositiveInteger(0, array.length - 1)];
 
 // Функция возвращающая генератор уникальных идентефикаторов.
-function createIdGenerator() {
+const createIdGenerator = () => {
   let lastGeneratedId = 0;
   return function () {
     lastGeneratedId += 1;
     return lastGeneratedId;
   };
-}
+};
 
 const isEscapeKey = (event) => event.key === 'Escape';
 
 // Функция для отображения сообщения об ошибке запроса загрузки данных с сервера. пункт 4.2 текущего тз
 // Идея дизайна взята https://us.niemvuilaptrinh.com/article/27-example-of-alert-javascript-for-website
-function alertFailureMesage(message) {
+const alertFailureMesage = (message) => {
   document.createElement('div');
 
   const alertNode = document.createElement('div');
@@ -100,7 +100,7 @@ function alertFailureMesage(message) {
 
   alertNode.appendChild(container);
   document.body.appendChild(alertNode);
-}
+};
 
 // Функция для отрисовки сообщения об успехе загрузки фотографии
 const showSuccessMessage = () => {
@@ -144,7 +144,7 @@ const showErrorMessage = () => {
   document.body.appendChild(errorFragment);
 };
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
@@ -160,30 +160,9 @@ function debounce (callback, timeoutDelay = 500) {
     // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
-}
+};
 
-function throttle (callback, delayBetweenFrames) {
-  // Используем замыкания, чтобы время 'последнего кадра' навсегда приклеилось
-  // к возвращаемой функции с условием, тогда мы его сможем перезаписывать
-  let lastTime = 0;
-
-  return (...rest) => {
-    // Получаем текущую дату в миллисекундах,
-    // чтобы можно было в дальнейшем
-    // вычислять разницу между кадрами
-    const now = new Date();
-
-    // Если время между кадрами больше задержки,
-    // вызываем наш колбэк и перезаписываем lastTime
-    // временем 'последнего кадра'
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-}
-
-function shuffleArray(array) {
+const shuffleArray = (array) => {
   let currentIndex = array.length,  randomIndex;
 
   // While there remain elements to shuffle.
@@ -199,10 +178,10 @@ function shuffleArray(array) {
   }
 
   return array;
-}
+};
 
 
 export {getRandomPositiveInteger, checkStringLength,
   createRandomIdFromRangeGenerator, getRandomArrayElement, createIdGenerator,
   isEscapeKey, alertFailureMesage, showSuccessMessage, showErrorMessage,
-  debounce, throttle, shuffleArray};
+  debounce, shuffleArray};

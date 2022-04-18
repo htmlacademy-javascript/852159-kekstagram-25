@@ -1,7 +1,7 @@
 // Вспомогательная функция для удаления уже отрисованных картинок
 const clearMiniPictures = () => {
-  const pictures = document.querySelector('.pictures');
-  pictures.querySelectorAll('.picture').forEach((picture) => {
+  const picturesNode = document.querySelector('.pictures');
+  picturesNode.querySelectorAll('.picture').forEach((picture) => {
     picture.remove();
   });
 };
@@ -11,7 +11,7 @@ const renderMiniPictures = (postsArray) => {
   // Сначала очистим область от картинок, отсортированных ранее
   clearMiniPictures();
   // Нода, в которую мы добавим результат
-  const pictures = document.querySelector('.pictures');
+  const picturesNode = document.querySelector('.pictures');
   // Шаблон, по которому будем создавать фотографии
   const pictureTemplate = document.querySelector('#picture')
     .content
@@ -31,7 +31,7 @@ const renderMiniPictures = (postsArray) => {
     picturesFragment.appendChild(photo);
   });
   // Добавляем результат в DOM
-  pictures.appendChild(picturesFragment);
+  picturesNode.appendChild(picturesFragment);
 };
 
 export { renderMiniPictures };

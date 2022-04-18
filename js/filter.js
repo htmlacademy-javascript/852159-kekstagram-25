@@ -4,16 +4,14 @@ import {debounce, shuffleArray} from './util.js';
 const FILTER_DELAY = 500;
 const RANDOM_PHOTOS_LIMIT = 10;
 
-const filters = document.querySelector('.img-filters');
+const filtersNode = document.querySelector('.img-filters');
 
 const defaultButton = document.querySelector('#filter-default');
 const randomButton = document.querySelector('#filter-random');
 const discussedButton = document.querySelector('#filter-discussed');
 
 // Всопомогательная функция для сравнения двух фотографий по количеству комментариев
-function compareCommentsCount(photo1, photo2) {
-  return photo2.comments.length - photo1.comments.length;
-}
+const compareCommentsCount = (photo1, photo2) => photo2.comments.length - photo1.comments.length;
 
 //Вспомогательная функция для очистки активной кнопки и выбора новой
 const setActive = (activeButton) => {
@@ -28,7 +26,7 @@ const setActive = (activeButton) => {
 const onPhotosRecieved = (photosArray) => {
   // Регистрируем обработчики событий по нажатию на кнопки
   // По умолчанию рисуем картинки в порядке 'как есть'
-  filters.classList.remove('img-filters--inactive');
+  filtersNode.classList.remove('img-filters--inactive');
   defaultButton.addEventListener('click', debounce(() => {
     showGallery(photosArray);
     setActive(defaultButton);

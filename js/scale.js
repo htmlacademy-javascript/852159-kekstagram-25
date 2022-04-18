@@ -23,7 +23,7 @@ const rescaleImage = () => {
 };
 
 // Вспомогательная функция для понижения скейла
-const lowerScale = () => {
+const decreaseScale = () => {
   imageScalueValue -= SCALE_STEP;
   if (imageScalueValue < MIN_SCALE_VALUE) {
     imageScalueValue = MIN_SCALE_VALUE;
@@ -32,7 +32,7 @@ const lowerScale = () => {
 };
 
 // Вспомогательная функция для повышения скейла
-const higherScale = () => {
+const increaseScale = () => {
   imageScalueValue += SCALE_STEP;
   if (imageScalueValue > MAX_SCALE_VALUE) {
     imageScalueValue = MAX_SCALE_VALUE;
@@ -47,7 +47,7 @@ const resetScale = () => {
 };
 
 // Добавляем обработчики нажатия на кнопки
-scaleSmallerButton.addEventListener('click', lowerScale);
-scaleBiggerButton.addEventListener('click', higherScale);
+scaleSmallerButton.addEventListener('click', decreaseScale);
+scaleBiggerButton.addEventListener('click', increaseScale);
 
 export {resetScale};
