@@ -49,14 +49,16 @@ const validateHashTags = (textHashtags) => {
   arrayHashtags.every((item) => {
     // Если мы не встречали еще этого тега
     if (!checkedTags.includes(item)) {
+      // проверяем тег по регулярному выражению
       if (!re.test(item)) {
         // еслитег не удовлетворяет регулярному вырожению
         // сразу остановим цикл every
         result = false;
-        return false;
+      } else {
+        // запомним проверянный тег
+        checkedTags.push(item);
       }
-      // запомним проверянный тег
-      checkedTags.push(item);
+      return result;
     }
     else {
       // хэштеги уникальны
@@ -83,6 +85,8 @@ const onFormSubmit = () => {
 };
 
 const onFormSubmitError = () => {
+  closeFormModal();
+  resetForm();
   showErrorMessage();
 };
 
