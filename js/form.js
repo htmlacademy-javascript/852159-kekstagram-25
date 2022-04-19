@@ -78,15 +78,33 @@ const resetForm = () => {
   resetSlider();
 };
 
+// Обработчик нажатия кнопки по форме
+const onFormKeydown = function(event) {
+  if (isEscapeKey(event)) {
+    event.preventDefault();
+    closeFormModal();
+  }
+};
+
+// Вспомогательная функция, которая прячет форму
+// Объявлена функцией, что не соответствует критерию о единообразии
+// объявлений функций, потому как в данном случае, эта функция используется
+// в onFormKeydown, и она же использует onFormKeydown. Попытка развязать эту
+// зависимость приводит к сильному дублоированию кода.
+function closeFormModal() {
+  document.body.classList.remove('modal-open');
+  uploadOverlayForm.classList.add('hidden');
+  document.removeEventListener('keydown', onFormKeydown);
+  // сбрасываем значения формы
+  resetForm();
+}
 const onFormSubmit = () => {
   closeFormModal();
-  resetForm();
   showSuccessMessage();
 };
 
 const onFormSubmitError = () => {
   closeFormModal();
-  resetForm();
   showErrorMessage();
 };
 
@@ -101,27 +119,11 @@ uploadForm.addEventListener('submit', (event) => {
   }
 });
 
-// Обработчик нажатия кнопки по форме
-const onFormKeydown = (event) => {
-  if (isEscapeKey(event)) {
-    event.preventDefault();
-    closeFormModal();
-    resetForm();
-  }
-};
-
-// Вспомогательная функция, которая прячет форму
-function closeFormModal() {
-  document.body.classList.remove('modal-open');
-  uploadOverlayForm.classList.add('hidden');
-  document.removeEventListener('keydown', onFormKeydown);
-}
-
-function validateImage() {
+const validateImage = () => {
   const image = uploadFile.files[0];
   const match = ALLOWED_FILE_TYPES.some((type) => image.name.toLowerCase().endsWith(`.${  type}`));
   return match;
-}
+};
 
 // Отображаем форму после выбора картинки пользователем
 uploadFile.addEventListener('change', () => {

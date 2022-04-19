@@ -7,19 +7,16 @@ const POST_URL = 'https://25.javascript.pages.academy/kekstagram';
 
 const FETCH_RETRY_TIMEOUT = 3000;
 
-
-function handleResponse (response) {
+const handleResponse = (response) => {
   if (!response.ok) {
     throw new Error(`Загрузка не удалась. Подождите немного. ${response.status} ${response.statusText}`);
   }
   return response;
-}
+};
 
-function toJSON (response) {
-  return response.json();
-}
+const toJSON = (response) => response.json();
 
-function fetchData() {
+const fetchData = () => {
   fetch(DATA_URL)
     .then(handleResponse)
     .then(toJSON)
@@ -28,7 +25,7 @@ function fetchData() {
       alertFailureMesage(err);
       setTimeout(fetchData, FETCH_RETRY_TIMEOUT);
     });
-}
+};
 
 fetchData();
 

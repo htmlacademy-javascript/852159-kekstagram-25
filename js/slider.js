@@ -39,13 +39,8 @@ noUiSlider.create(sliderElement, {
   step: DEFUALT_STEP,
   connect: 'lower',
   format: {
-    to: (value) => {
-      if (Number.isInteger(value)) {
-        return value.toString();
-      }
-      return value.toFixed(1);
-    },
-    from: (value) => parseFloat(value)
+    to: (value) => value.toFixed(1),
+    from: parseFloat
   }
 });
 

@@ -1,10 +1,10 @@
 import {isEscapeKey} from './util.js';
 
-const bigPicture = document.querySelector('.big-picture');
-const commentsLoaderNode = bigPicture.querySelector('.comments-loader');
-const commentsBlock = bigPicture.querySelector('.social__comments');
-const commentsCountNode = bigPicture.querySelector('.social__comment-count');
-const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
+const bigPictureNode = document.querySelector('.big-picture');
+const commentsLoaderNode = bigPictureNode.querySelector('.comments-loader');
+const commentsBlock = bigPictureNode.querySelector('.social__comments');
+const commentsCountNode = bigPictureNode.querySelector('.social__comment-count');
+const bigPictureNodeClose = bigPictureNode.querySelector('.big-picture__cancel');
 
 const MAX_COMMENTS_SHOWED = 5;
 let commentsArray = [];
@@ -18,23 +18,27 @@ const onKeyDown = (event) => {
 };
 
 // Вспомогательная функция для выхода из полноразмерного режима
+// Объявлена функцией, что не соответствует критерию о единообразии
+// объявлений функций, потому как в данном случае, эта функция используется
+// в onKeyDown, и она же использует onKeyDown. Попытка развязать эту
+// зависимость приводит к сильному дублоированию кода.
 function closeFullSize() {
   document.querySelector('body').classList.remove('modal-open');
-  bigPicture.classList.add('hidden');
+  bigPictureNode.classList.add('hidden');
   document.removeEventListener('keydown', onKeyDown);
 }
 
-function resetComments(comments) {
+const resetComments = (comments) => {
   // удаляем ранее выведенные комментарии
-  bigPicture.querySelector('.social__comments').textContent = ' ';
-  bigPicture.querySelector('.comments-count').textContent = comments.length.toString();
+  bigPictureNode.querySelector('.social__comments').textContent = ' ';
+  bigPictureNode.querySelector('.comments-count').textContent = comments.length.toString();
   // копируем массив с комментарием, чтобы менять его при отображении
   commentsArray = [...comments];
   // Показываем кнопку "Загрузить комментарии"ж
   commentsLoaderNode.classList.remove('hidden');
-}
+};
 
-function renderComment(commentObject) {
+const renderComment = (commentObject) => {
   const comment = document.createElement('li');
   const img = document.createElement('img');
   const socialText = document.createElement('p');
@@ -53,10 +57,10 @@ function renderComment(commentObject) {
   comment.appendChild(socialText);
 
   commentsBlock.appendChild(comment);
-}
+};
 
 // Вспомогательная функция для вывода комментариев к посту
-function renderComments() {
+const renderComments = () => {
   // Вычисляем сколько комментариев показать
   const commentsToShowCount = Math.min(MAX_COMMENTS_SHOWED, commentsArray.length);
   // Выбираем комментарии для отображения
@@ -71,18 +75,18 @@ function renderComments() {
   if (!commentsArray.length) {
     commentsLoaderNode.classList.add('hidden');
   }
-}
+};
 
 // Функция для включения полноразмерного режима для поста с заданным src
-function fullSizePicture(id, posts) {
+const fullSizePicture = (id, posts) => {
   // получаем первый же пост с заданным src
   const post = posts.find((element) => element.id.toString() === id);
   resetComments(post.comments);
-  // заполняем элементы поста в элемент DOM bigPicture
-  bigPicture.querySelector('img').src = post.url;
-  bigPicture.querySelector('.likes-count').textContent = post.likes;
-  bigPicture.querySelector('.comments-count').textContent = post.comments.length;
-  bigPicture.querySelector('.social__caption').textContent = post.description;
+  // заполняем элементы поста в элемент DOM bigPictureNode
+  bigPictureNode.querySelector('img').src = post.url;
+  bigPictureNode.querySelector('.likes-count').textContent = post.likes;
+  bigPictureNode.querySelector('.comments-count').textContent = post.comments.length;
+  bigPictureNode.querySelector('.social__caption').textContent = post.description;
 
   // заполняем комментарии
   renderComments();
@@ -90,14 +94,14 @@ function fullSizePicture(id, posts) {
   // не прокручивался
   document.querySelector('body').classList.add('modal-open');
   // отображаем картинку
-  bigPicture.classList.remove('hidden');
+  bigPictureNode.classList.remove('hidden');
   // закроем окно по нажатию Esc
   document.addEventListener('keydown', onKeyDown);
-}
+};
 
 // Функция для отрисовки картинок
 // в полноразмерном режиме
-function renderFullsize(posts) {
+const renderFullsize = (posts) => {
   // Эту константу мы не можем вынести из функции, т.к. этот элемент DOM
   // генерируется после загрузки модуля
   const pictures = document.querySelectorAll('.picture');
@@ -108,9 +112,9 @@ function renderFullsize(posts) {
       fullSizePicture(picture.id, posts);
     });
   });
-  bigPictureClose.addEventListener('click', () => closeFullSize());
+  bigPictureNodeClose.addEventListener('click', () => closeFullSize());
 
   commentsLoaderNode.addEventListener('click', renderComments);
-}
+};
 
 export {renderFullsize};
